@@ -1,21 +1,22 @@
 package test;
 
 import driver.DriverSingleton;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+
+import org.testng.annotations.AfterTest;
+
+import org.testng.annotations.BeforeTest;
 
 public class CommonCondition {
 
     protected WebDriver driver;
 
-    @BeforeMethod()
+    @BeforeTest()
     public void setUp() {
         driver = DriverSingleton.getDriver();
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterTest()
     public void tearDown() {
         DriverSingleton.closeBrowser();
     }
