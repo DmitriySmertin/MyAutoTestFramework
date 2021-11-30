@@ -1,5 +1,7 @@
 package test;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 import page.MainPage;
 
@@ -13,8 +15,10 @@ public class PriceCalculatorTest extends CommonCondition {
         MainPage mainPage = new MainPage(driver);
         mainPage.openPage()
             .search(search)
-            .openCalculatorLink();
-        Thread.sleep(2000);
+            .openCalculatorLink()
+            .checkInFrame()
+            .fillForm("4");
+        Thread.sleep(5000);
     }
 
 }
