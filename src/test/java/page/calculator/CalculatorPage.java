@@ -10,6 +10,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import page.AbstractPage;
 import page.calculator.component.engine.Engine;
 import page.calculator.component.engine.EngineComponent;
+import page.calculator.component.instances.InstancesComponent;
+import page.calculator.component.instances.OsType;
+import page.calculator.component.instances.VmClass;
 
 public class CalculatorPage extends AbstractPage {
 
@@ -17,7 +20,7 @@ public class CalculatorPage extends AbstractPage {
     WebDriverWait wait = new WebDriverWait(driver, 5);
     JavascriptExecutor jse = (JavascriptExecutor) driver;
     EngineComponent engineComponent = new EngineComponent(driver);
-//    InstancesComponent instancesComponent = new InstancesComponent(driver);
+    InstancesComponent instancesComponent = new InstancesComponent(driver);
 
     @FindBy(css = "article#cloud-site iframe")
     WebElement globalFrame;
@@ -25,10 +28,6 @@ public class CalculatorPage extends AbstractPage {
     WebElement calculatorFrame;
     @FindBy(xpath = "//input[@ng-model='listingCtrl.computeServer.quantity']")
     WebElement numbInst;
-    @FindBy(xpath = "//md-select[@ng-model='listingCtrl.computeServer.os']//md-select-value")
-    WebElement OSDropbox;
-    @FindBy(xpath = "//md-option[contains(@value,'free')]//div")
-    WebElement OSFree;
     @FindBy(xpath = "//md-select[@placeholder='Series']//md-select-value")
     WebElement seriesDropbox;
     @FindBy(xpath = "//md-option//div[contains(text(),'N1')]")
@@ -94,17 +93,16 @@ public class CalculatorPage extends AbstractPage {
         numbOfGpuDropbox.click();
         numbOfGpu1.click();
     }
-
-    public CalculatorPage fillForm(String NumberInstance, Engine engine) {
+    public void scrollToElement(WebElement element) {
+        jse.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+    public CalculatorPage fillForm(String NumberInstance, Engine engine, OsType osType, VmClass vmClass) {
         engineComponent.selectEngine(engine);
         scrollToElement(numbInst);
         numbInst.sendKeys(NumberInstance);
-        wait.until(ExpectedConditions.elementToBeClickable(OSDropbox));
-        OSDropbox.click();
-        wait.until(ExpectedConditions.elementToBeClickable(OSFree));
-        OSFree.click();
-//        instancesComponent.selectVMClass(vmClass);
-        scrollToElement(OSDropbox);
+        instancesComponent.selectOS(osType);
+        instancesComponent.selectVmClass(vmClass);
+        scrollToElement(instancesComponent.OSDropbox);
         wait.until(ExpectedConditions.elementToBeClickable(seriesDropbox));
         seriesDropbox.click();
         wait.until(ExpectedConditions.elementToBeClickable(n1));
@@ -140,7 +138,5 @@ public class CalculatorPage extends AbstractPage {
         emailEstimateBtn.click();
     }
 
-    public void scrollToElement(WebElement element) {
-        jse.executeScript("arguments[0].scrollIntoView(true);", element);
-    }
+
 }

@@ -3,6 +3,8 @@ package test;
 import org.testng.annotations.Test;
 import page.MainPage;
 import page.calculator.component.engine.Engine;
+import page.calculator.component.instances.OsType;
+import page.calculator.component.instances.VmClass;
 
 public class PriceCalculatorTest extends CommonCondition {
 
@@ -16,7 +18,7 @@ public class PriceCalculatorTest extends CommonCondition {
             .search(search)
             .openCalculatorLink()
             .checkInFrame()
-            .fillForm("4", Engine.COMPUTE_ENGINE);
+            .fillForm("4", Engine.COMPUTE_ENGINE, OsType.FREE_DEBIAN, VmClass.REGULAR);
         Thread.sleep(5000);
     }
 
