@@ -23,47 +23,47 @@ public class InstancesComponent extends AbstractComponent {
 
     //Operating System/Software
     @FindBy(xpath = "//md-select[@ng-model='listingCtrl.computeServer.os']//md-select-value")
-    public WebElement OSDropbox;
+    public static WebElement OSDropbox;
     @FindBy(xpath = "//md-option[contains(@value,'free')]//div")
-    WebElement OSFree;
+    static WebElement OSFree;
 
     //vmClass
     @FindBy(xpath = "//md-select[@placeholder='VM Class']//md-select-value")
-    WebElement vmClassDropbox;
+    static WebElement vmClassDropbox;
     @FindBy(xpath = "(//md-option[@value='regular']//div)[2]")
-    WebElement vmRegular;
+    static WebElement vmRegular;
 
     //Series
     @FindBy(xpath = "//md-select[@placeholder='Series']//md-select-value")
-    public WebElement seriesDropbox;
+    public static WebElement seriesDropbox;
     @FindBy(xpath = "//md-option//div[contains(text(),'N1')]")
-    WebElement n1;
+    static WebElement n1;
 
     //Machine Type
     @FindBy(xpath = "//md-select[@placeholder='Instance type']")
-    WebElement machineTypeDropbox;
+    static WebElement machineTypeDropbox;
     @FindBy(xpath = "//md-optgroup[@label='standard']//div[contains(text(),'n1-standard-8')]")
-    WebElement n1Standard8;
+    static WebElement n1Standard8;
 
     //SSD
     @FindBy(xpath = "//md-select[@placeholder='Local SSD']//md-select-value")
-    WebElement localSsdDropbox;
+    static WebElement localSsdDropbox;
     @FindBy(xpath = "//md-option//div[contains(text(),'2x375 GB')]")
-    WebElement ssdOption2x375;
+    static WebElement ssdOption2x375;
 
     //Data Center
     @FindBy(xpath = "//md-select[contains(@ng-model,'computeServer.location')]//md-select-value")
-    WebElement dataCenterDropbox;
+    static WebElement dataCenterDropbox;
     @FindBy(xpath = "//md-option[contains(@ng-repeat,'.computeServer')]//div[contains(text(),'Frankfurt (europe-west3)')]")
-    WebElement frankfurtEW3;
+    static WebElement frankfurtEW3;
 
     //Committed Usage
     @FindBy(xpath = "//md-select[contains(@ng-model,'computeServer.cud')]//md-select-value")
-    WebElement committedUsage;
+    static WebElement committedUsage;
     @FindBy(xpath = "(//md-option//div[contains(text(),'1 Year')])[2]")
-    WebElement comUsOneYear;
+    static WebElement comUsOneYear;
 
-    public void selectOS(OsType osType) {
+    public static void selectOS(OsType osType) {
         wait.until(ExpectedConditions.elementToBeClickable(OSDropbox));
         OSDropbox.click();
         switch (osType) {
@@ -78,7 +78,7 @@ public class InstancesComponent extends AbstractComponent {
         }
     }
 
-    public void selectVmClass(VmClass vmClass) {
+    public static void selectVmClass(VmClass vmClass) {
         wait.until(ExpectedConditions.elementToBeClickable(vmClassDropbox));
         vmClassDropbox.click();
         switch (vmClass) {
@@ -91,7 +91,7 @@ public class InstancesComponent extends AbstractComponent {
         }
     }
 
-    public void selectSeries(Series series) {
+    public static void selectSeries(Series series) {
         wait.until(ExpectedConditions.elementToBeClickable(seriesDropbox));
         seriesDropbox.click();
         switch (series) {
@@ -105,7 +105,7 @@ public class InstancesComponent extends AbstractComponent {
         }
     }
 
-    public void selectMachineType(MachineType machineType) {
+    public static void selectMachineType(MachineType machineType) {
         wait.until(ExpectedConditions.elementToBeClickable(machineTypeDropbox));
         machineTypeDropbox.click();
         switch (machineType) {
@@ -120,7 +120,7 @@ public class InstancesComponent extends AbstractComponent {
         }
     }
 
-    public void selectLocalSsd(Ssd ssd) {
+    public static void selectLocalSsd(Ssd ssd) {
         wait.until(ExpectedConditions.elementToBeClickable(localSsdDropbox));
         localSsdDropbox.click();
         switch (ssd) {
@@ -135,7 +135,7 @@ public class InstancesComponent extends AbstractComponent {
         }
     }
 
-    public void selectDataCenter(DataCenter dataCenter) {
+    public static void selectDataCenter(DataCenter dataCenter) {
         wait.until(ExpectedConditions.elementToBeClickable(dataCenterDropbox));
         dataCenterDropbox.click();
         switch (dataCenter) {
@@ -149,7 +149,7 @@ public class InstancesComponent extends AbstractComponent {
         }
     }
 
-    public void selectCommUsage(CommittedUsage commUsage) {
+    public static void selectCommUsage(CommittedUsage commUsage) {
         wait.until(ExpectedConditions.elementToBeClickable(committedUsage));
         committedUsage.click();
         switch (commUsage) {

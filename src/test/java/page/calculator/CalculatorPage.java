@@ -1,5 +1,15 @@
 package page.calculator;
 
+import static page.calculator.component.instances.InstancesComponent.OSDropbox;
+import static page.calculator.component.instances.InstancesComponent.selectCommUsage;
+import static page.calculator.component.instances.InstancesComponent.selectDataCenter;
+import static page.calculator.component.instances.InstancesComponent.selectLocalSsd;
+import static page.calculator.component.instances.InstancesComponent.selectMachineType;
+import static page.calculator.component.instances.InstancesComponent.selectOS;
+import static page.calculator.component.instances.InstancesComponent.selectSeries;
+import static page.calculator.component.instances.InstancesComponent.selectVmClass;
+import static page.calculator.component.instances.InstancesComponent.seriesDropbox;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -46,6 +56,10 @@ public class CalculatorPage extends AbstractPage {
     WebElement addToEstimateBtn;
     @FindBy(id = "email_quote")
     WebElement emailEstimateBtn;
+    @FindBy(xpath = "//input[@ng-model='emailQuote.user.email']")
+    WebElement estimateFormEmailInput;
+    @FindBy(xpath = "//button[@aria-label='Send Email']")
+    WebElement sendEmailBtn;
 
     public CalculatorPage(WebDriver driver) {
         super(driver);
@@ -63,8 +77,9 @@ public class CalculatorPage extends AbstractPage {
         return new CalculatorPage(driver);
     }
 
-    public void checkOut() {
+    public CalculatorPage checkOut() {
         driver.switchTo().defaultContent();
+        return new CalculatorPage(driver);
     }
 
     private void addGpu() {
@@ -93,17 +108,17 @@ public class CalculatorPage extends AbstractPage {
         engineComponent.selectEngine(engine);
         scrollToElement(numbInst);
         numbInst.sendKeys(NumberInstance);
-        instancesComponent.selectOS(osType);
-        instancesComponent.selectVmClass(vmClass);
-        scrollToElement(instancesComponent.OSDropbox);
-        instancesComponent.selectSeries(series);
-        instancesComponent.selectMachineType(machineType);
-        scrollToElement(instancesComponent.seriesDropbox);
+        selectOS(osType);
+        selectVmClass(vmClass);
+        scrollToElement(OSDropbox);
+        selectSeries(series);
+        selectMachineType(machineType);
+        scrollToElement(seriesDropbox);
         addGpu();
         scrollToElement(addGpuCheckBox);
-        instancesComponent.selectLocalSsd(ssd);
-        instancesComponent.selectDataCenter(dataCenter);
-        instancesComponent.selectCommUsage(commUsage);
+        selectLocalSsd(ssd);
+        selectDataCenter(dataCenter);
+        selectCommUsage(commUsage);
         addBtnCompEng();
         return new CalculatorPage(driver);
     }
@@ -113,9 +128,16 @@ public class CalculatorPage extends AbstractPage {
         addToEstimateBtn.click();
     }
 
-    public void emailEstimate() {
+    public CalculatorPage emailEstimate() {
         wait.until(ExpectedConditions.elementToBeClickable(emailEstimateBtn));
         emailEstimateBtn.click();
+        return new CalculatorPage(driver);
+    }
+
+    public void fillEstimateForm(String email) {
+        estimateFormEmailInput.sendKeys(email);
+        wait.until(ExpectedConditions.elementToBeClickable(sendEmailBtn));
+        sendEmailBtn.click();
     }
 
 

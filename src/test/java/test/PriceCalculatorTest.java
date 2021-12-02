@@ -1,7 +1,9 @@
 package test;
 
 import org.testng.annotations.Test;
+import page.EmailGeneratorPage;
 import page.MainPage;
+import page.calculator.CalculatorPage;
 import page.calculator.component.engine.Engine;
 import page.calculator.component.instances.optionsEnam.CommittedUsage;
 import page.calculator.component.instances.optionsEnam.DataCenter;
@@ -16,15 +18,26 @@ public class PriceCalculatorTest extends CommonCondition {
     String search = "Google cloud pricing calculator";
 
     @Test
-    public void priceCalculatorTest() {
+    public void priceCalculatorTest() throws InterruptedException {
         MainPage mainPage = new MainPage(driver);
-        mainPage.openPage()
+        CalculatorPage calculator =  mainPage.openPage()
             .search(search)
             .openCalculatorLink()
             .checkInFrame()
             .fillForm("4", Engine.COMPUTE_ENGINE, OsType.FREE_DEBIAN, VmClass.REGULAR, Series.N1,
                       MachineType.N1_STANDARD_8, Ssd.TWO_X_375, DataCenter.FRANKFURT, CommittedUsage.ONE_YEAR)
-            .emailEstimate();
+            .emailEstimate()
+            .checkOut();
+        EmailGeneratorPage emailPage = new EmailGeneratorPage(driver);
+        emailPage.createNewTab();
+        emailPage.switchTab(2);
+        String genEmail = emailPage.openPage().generateEmail();
+        emailPage.switchTab(1);
+        calculator
+            .checkInFrame()
+            .fillEstimateForm(genEmail);
+
+        Thread.sleep(5000);
     }
 
 }
