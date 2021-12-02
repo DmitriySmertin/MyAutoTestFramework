@@ -20,5 +20,4 @@ public class CommonCondition {
     public void tearDown() {
         DriverSingleton.closeBrowser();
     }
-
 }

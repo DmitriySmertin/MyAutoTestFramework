@@ -1,4 +1,4 @@
-package page.calculator.component.instances;
+package page.calculator.component.instances.optionsEnam;
 
 public enum OsType {
     //not complete. add as needed

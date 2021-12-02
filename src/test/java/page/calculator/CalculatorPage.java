@@ -11,11 +11,15 @@ import page.AbstractPage;
 import page.calculator.component.engine.Engine;
 import page.calculator.component.engine.EngineComponent;
 import page.calculator.component.instances.InstancesComponent;
-import page.calculator.component.instances.OsType;
-import page.calculator.component.instances.VmClass;
+import page.calculator.component.instances.optionsEnam.CommittedUsage;
+import page.calculator.component.instances.optionsEnam.DataCenter;
+import page.calculator.component.instances.optionsEnam.MachineType;
+import page.calculator.component.instances.optionsEnam.OsType;
+import page.calculator.component.instances.optionsEnam.Ssd;
+import page.calculator.component.instances.optionsEnam.Series;
+import page.calculator.component.instances.optionsEnam.VmClass;
 
 public class CalculatorPage extends AbstractPage {
-
 
     WebDriverWait wait = new WebDriverWait(driver, 5);
     JavascriptExecutor jse = (JavascriptExecutor) driver;
@@ -28,14 +32,6 @@ public class CalculatorPage extends AbstractPage {
     WebElement calculatorFrame;
     @FindBy(xpath = "//input[@ng-model='listingCtrl.computeServer.quantity']")
     WebElement numbInst;
-    @FindBy(xpath = "//md-select[@placeholder='Series']//md-select-value")
-    WebElement seriesDropbox;
-    @FindBy(xpath = "//md-option//div[contains(text(),'N1')]")
-    WebElement n1;
-    @FindBy(xpath = "//md-select[@placeholder='Instance type']")
-    WebElement machineTypeDropbox;
-    @FindBy(xpath = "//md-optgroup[@label='standard']//div[contains(text(),'n1-standard-8')]")
-    WebElement n1Standard8;
     @FindBy(xpath = "//md-checkbox[@ng-model='listingCtrl.computeServer.addGPUs']")
     WebElement addGpuCheckBox;
     @FindBy(xpath = "//md-select[@placeholder='GPU type']//md-select-value")
@@ -46,23 +42,10 @@ public class CalculatorPage extends AbstractPage {
     WebElement numbOfGpuDropbox;
     @FindBy(xpath = "//md-option[contains(@ng-repeat,'computeServer.gpuType')]//div[contains(text(),'1')]")
     WebElement numbOfGpu1;
-    @FindBy(xpath = "//md-select[@placeholder='Local SSD']//md-select-value")
-    WebElement localSsdDropbox;
-    @FindBy(xpath = "//md-option//div[contains(text(),'2x375 GB')]")
-    WebElement ssdOption2x375;
-    @FindBy(xpath = "//md-select[contains(@ng-model,'computeServer.location')]//md-select-value")
-    WebElement dataCenterDropbox;
-    @FindBy(xpath = "//md-option[contains(@ng-repeat,'.computeServer')]//div[contains(text(),'Frankfurt (europe-west3)')]")
-    WebElement dataCenterFrankfurtEW3;
-    @FindBy(xpath = "//md-select[contains(@ng-model,'computeServer.cud')]//md-select-value")
-    WebElement committedUsage;
-    @FindBy(xpath = "(//md-option//div[contains(text(),'1 Year')])[2]")
-    WebElement comUsOneYear;
     @FindBy(xpath = "//button[contains(@ng-click,'(ComputeEngineForm)')]")
-    WebElement addToEstimate;
+    WebElement addToEstimateBtn;
     @FindBy(id = "email_quote")
     WebElement emailEstimateBtn;
-
 
     public CalculatorPage(WebDriver driver) {
         super(driver);
@@ -93,44 +76,41 @@ public class CalculatorPage extends AbstractPage {
         numbOfGpuDropbox.click();
         numbOfGpu1.click();
     }
+
     public void scrollToElement(WebElement element) {
         jse.executeScript("arguments[0].scrollIntoView(true);", element);
     }
-    public CalculatorPage fillForm(String NumberInstance, Engine engine, OsType osType, VmClass vmClass) {
+
+    public CalculatorPage fillForm(String NumberInstance,
+                                   Engine engine,
+                                   OsType osType,
+                                   VmClass vmClass,
+                                   Series series,
+                                   MachineType machineType,
+                                   Ssd ssd,
+                                   DataCenter dataCenter,
+                                   CommittedUsage commUsage) {
         engineComponent.selectEngine(engine);
         scrollToElement(numbInst);
         numbInst.sendKeys(NumberInstance);
         instancesComponent.selectOS(osType);
         instancesComponent.selectVmClass(vmClass);
         scrollToElement(instancesComponent.OSDropbox);
-        wait.until(ExpectedConditions.elementToBeClickable(seriesDropbox));
-        seriesDropbox.click();
-        wait.until(ExpectedConditions.elementToBeClickable(n1));
-        n1.click();
-        wait.until(ExpectedConditions.elementToBeClickable(machineTypeDropbox));
-        machineTypeDropbox.click();
-        scrollToElement(seriesDropbox);
-        wait.until(ExpectedConditions.elementToBeClickable(n1Standard8));
-        n1Standard8.click();
+        instancesComponent.selectSeries(series);
+        instancesComponent.selectMachineType(machineType);
+        scrollToElement(instancesComponent.seriesDropbox);
         addGpu();
         scrollToElement(addGpuCheckBox);
-        localSsdDropbox.click();
-        wait.until(ExpectedConditions.elementToBeClickable(ssdOption2x375));
-        ssdOption2x375.click();
-        wait.until(ExpectedConditions.elementToBeClickable(dataCenterDropbox));
-        dataCenterDropbox.click();
-        wait.until(ExpectedConditions.elementToBeClickable(dataCenterFrankfurtEW3));
-        dataCenterFrankfurtEW3.click();
-        committedUsage.click();
-        wait.until(ExpectedConditions.elementToBeClickable(comUsOneYear));
-        comUsOneYear.click();
+        instancesComponent.selectLocalSsd(ssd);
+        instancesComponent.selectDataCenter(dataCenter);
+        instancesComponent.selectCommUsage(commUsage);
         addBtnCompEng();
         return new CalculatorPage(driver);
     }
 
     public void addBtnCompEng() {
-        wait.until(ExpectedConditions.elementToBeClickable(addToEstimate));
-        addToEstimate.click();
+        wait.until(ExpectedConditions.elementToBeClickable(addToEstimateBtn));
+        addToEstimateBtn.click();
     }
 
     public void emailEstimate() {
