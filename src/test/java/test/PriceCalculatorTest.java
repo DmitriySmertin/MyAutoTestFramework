@@ -1,9 +1,8 @@
 package test;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 import page.MainPage;
+import page.calculator.component.engine.Engine;
 
 public class PriceCalculatorTest extends CommonCondition {
 
@@ -17,7 +16,7 @@ public class PriceCalculatorTest extends CommonCondition {
             .search(search)
             .openCalculatorLink()
             .checkInFrame()
-            .fillForm("4");
+            .fillForm("4", Engine.COMPUTE_ENGINE);
         Thread.sleep(5000);
     }
 
