@@ -1,5 +1,6 @@
 package test;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.EmailGeneratorPage;
 import page.MainPage;
@@ -20,7 +21,7 @@ public class PriceCalculatorTest extends CommonCondition {
     @Test
     public void priceCalculatorTest() throws InterruptedException {
         MainPage mainPage = new MainPage(driver);
-        CalculatorPage calculator =  mainPage.openPage()
+        CalculatorPage calculator = mainPage.openPage()
             .search(search)
             .openCalculatorLink()
             .checkInFrame()
@@ -35,9 +36,11 @@ public class PriceCalculatorTest extends CommonCondition {
         emailPage.switchTab(1);
         calculator
             .checkInFrame()
-            .fillEstimateForm(genEmail);
-
-        Thread.sleep(5000);
+            .fillEstimateForm(genEmail)
+            .checkOut();
+        emailPage.switchTab(2);
+        String actualResult = emailPage.checkEmail();
+        Assert.assertEquals(actualResult, "Google Cloud Price Estimate");
     }
 
 }

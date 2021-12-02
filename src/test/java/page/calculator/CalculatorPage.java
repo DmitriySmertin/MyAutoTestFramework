@@ -134,10 +134,11 @@ public class CalculatorPage extends AbstractPage {
         return new CalculatorPage(driver);
     }
 
-    public void fillEstimateForm(String email) {
+    public CalculatorPage fillEstimateForm(String email) {
         estimateFormEmailInput.sendKeys(email);
         wait.until(ExpectedConditions.elementToBeClickable(sendEmailBtn));
         sendEmailBtn.click();
+        return new CalculatorPage(driver);
     }
 
 

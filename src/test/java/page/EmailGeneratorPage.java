@@ -1,6 +1,8 @@
 package page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,6 +23,17 @@ public class EmailGeneratorPage extends AbstractPage {
     WebElement emailGenerateLink;
     @FindBy(id = "egen")
     WebElement email;
+    @FindBy(xpath = "//button[@onclick='egengo();']")
+    WebElement checkEmailBtn;
+    @FindBy(id = "refresh")
+    WebElement refreshBtn;
+    @FindBy(xpath = "//div[contains(text(),'Google Cloud Price Estimate')]")
+    WebElement textHeaderMail;
+    @FindBy(id = "message")
+    WebElement emptyMail;
+
+    @FindBy(css = "div.ylogo a")
+    WebElement linka;
 
     public EmailGeneratorPage(WebDriver driver) {
         super(driver);
@@ -47,6 +60,19 @@ public class EmailGeneratorPage extends AbstractPage {
         emailGenerateLink.click();
         wait.until(ExpectedConditions.visibilityOf(email));
         return email.getText();
+    }
+
+    public String checkEmail() throws InterruptedException {
+        driver.switchTo().defaultContent();
+        wait.until(ExpectedConditions.elementToBeClickable(checkEmailBtn));
+        checkEmailBtn.click();
+        wait.until(ExpectedConditions.visibilityOf(emptyMail));
+        while (emptyMail.isDisplayed()) {
+            refreshBtn.click();
+        }
+        driver.switchTo().frame("ifmail");
+        System.out.println(textHeaderMail.getText());
+        return textHeaderMail.getText();
     }
 
 
