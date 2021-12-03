@@ -26,23 +26,18 @@ public class PriceCalculatorTest extends CommonCondition {
         CalculatorPage calculator = mainPage.openPage()
             .search(search)
             .openCalculatorLink()
-            .checkInFrame()
-            .fillCalculator("4", Engine.COMPUTE_ENGINE, OsType.FREE_DEBIAN, VmClass.REGULAR, Series.N1,
+            .createEstimate("4", Engine.COMPUTE_ENGINE, OsType.FREE_DEBIAN, VmClass.REGULAR, Series.N1,
                             MachineType.N1_STANDARD_8, Ssd.TWO_X_375, DataCenter.FRANKFURT, CommittedUsage.ONE_YEAR)
-            .emailEstimate()
-            .checkOutFrame();
+            .sendEstimate();
         EmailGeneratorPage emailPage = new EmailGeneratorPage(driver);
-        emailPage.createNewTab();
-        emailPage.switchTab(2);
-        String genEmail = emailPage.openPage().generateEmail();
+        String genEmail = emailPage
+            .openPage()
+            .generateEmail();
         emailPage.switchTab(1);
         calculator
-            .checkInFrame()
-            .fillEstimateForm(genEmail)
-            .checkOutFrame();
+            .fillEstimateForm(genEmail);
         emailPage.switchTab(2);
         String actualResult = emailPage.checkEmail();
         Assert.assertEquals(actualResult, "Google Cloud Price Estimate");
     }
-
 }

@@ -20,7 +20,6 @@ public class InstancesComponent extends AbstractComponent {
         super(driver);
         PageFactory.initElements(this.driver, this);
     }
-
     //Operating System/Software
     @FindBy(xpath = "//md-select[@ng-model='listingCtrl.computeServer.os']//md-select-value")
     public static WebElement OSDropbox;

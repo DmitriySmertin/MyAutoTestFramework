@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import page.calculator.CalculatorPage;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -13,10 +14,8 @@ public class SearchResultPage extends AbstractPage {
     private Boolean resaltNoCalc = true;
     @FindBy(css = "div.devsite-search-page-controls a")
     WebElement nextBtn;
-
     @FindBy(css = "a.gs-title")
     List<WebElement> resultSearchList;
-
 
     public SearchResultPage(WebDriver driver) {
         super(driver);
@@ -41,5 +40,4 @@ public class SearchResultPage extends AbstractPage {
     protected SearchResultPage openPage() {
         return null;
     }
-
 }

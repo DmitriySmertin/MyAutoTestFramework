@@ -34,5 +34,4 @@ public class DriverSingleton {
         driver.quit();
         driver = null;
     }
-
 }

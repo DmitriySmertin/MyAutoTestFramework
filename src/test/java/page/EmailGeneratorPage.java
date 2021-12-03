@@ -1,9 +1,6 @@
 package page;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -43,6 +40,8 @@ public class EmailGeneratorPage extends AbstractPage {
 
     @Override
     public EmailGeneratorPage openPage() {
+        createNewTab();
+        switchTab(2);
         driver.navigate().to(TEMP_EMAIL_URL);
         return new EmailGeneratorPage(driver);
     }

@@ -99,7 +99,7 @@ public class CalculatorPage extends AbstractPage {
         jse.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
-    public CalculatorPage fillCalculator(String NumberInstance,
+    public CalculatorPage createEstimate(String NumberInstance,
                                          Engine engine,
                                          OsType osType,
                                          VmClass vmClass,
@@ -108,6 +108,7 @@ public class CalculatorPage extends AbstractPage {
                                          Ssd ssd,
                                          DataCenter dataCenter,
                                          CommittedUsage commUsage) {
+        checkInFrame();
         engineComponent.selectEngine(engine);
         scrollToElement(numbInst);
         numbInst.sendKeys(NumberInstance);
@@ -131,17 +132,20 @@ public class CalculatorPage extends AbstractPage {
         addToEstimateBtn.click();
     }
 
-    public CalculatorPage emailEstimate() {
+    public CalculatorPage sendEstimate() {
         wait.until(ExpectedConditions.elementToBeClickable(emailEstimateBtn));
         emailEstimateBtn.click();
+        checkOutFrame();
         return new CalculatorPage(driver);
     }
 
     public CalculatorPage fillEstimateForm(String email) {
+        checkInFrame();
         estimateFormEmailInput.sendKeys(email);
         wait.until(ExpectedConditions.elementToBeClickable(sendEmailBtn));
         scrollToElement(estimateFormEmailInput);
         sendEmailBtn.click();
+        checkOutFrame();
         return new CalculatorPage(driver);
     }
 }
