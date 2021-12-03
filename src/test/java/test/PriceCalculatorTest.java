@@ -1,5 +1,7 @@
 package test;
 
+import static service.TestDataReader.getTestData;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.EmailGeneratorPage;
@@ -16,7 +18,7 @@ import page.calculator.component.instances.optionsEnam.VmClass;
 
 public class PriceCalculatorTest extends CommonCondition {
 
-    String search = "Google cloud pricing calculator";
+    String search = getTestData("base_url");
 
     @Test
     public void priceCalculatorTest() throws InterruptedException {
@@ -25,10 +27,10 @@ public class PriceCalculatorTest extends CommonCondition {
             .search(search)
             .openCalculatorLink()
             .checkInFrame()
-            .fillForm("4", Engine.COMPUTE_ENGINE, OsType.FREE_DEBIAN, VmClass.REGULAR, Series.N1,
-                      MachineType.N1_STANDARD_8, Ssd.TWO_X_375, DataCenter.FRANKFURT, CommittedUsage.ONE_YEAR)
+            .fillCalculator("4", Engine.COMPUTE_ENGINE, OsType.FREE_DEBIAN, VmClass.REGULAR, Series.N1,
+                            MachineType.N1_STANDARD_8, Ssd.TWO_X_375, DataCenter.FRANKFURT, CommittedUsage.ONE_YEAR)
             .emailEstimate()
-            .checkOut();
+            .checkOutFrame();
         EmailGeneratorPage emailPage = new EmailGeneratorPage(driver);
         emailPage.createNewTab();
         emailPage.switchTab(2);
@@ -37,7 +39,7 @@ public class PriceCalculatorTest extends CommonCondition {
         calculator
             .checkInFrame()
             .fillEstimateForm(genEmail)
-            .checkOut();
+            .checkOutFrame();
         emailPage.switchTab(2);
         String actualResult = emailPage.checkEmail();
         Assert.assertEquals(actualResult, "Google Cloud Price Estimate");

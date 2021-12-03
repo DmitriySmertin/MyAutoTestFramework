@@ -31,9 +31,8 @@ public class EmailGeneratorPage extends AbstractPage {
     WebElement textHeaderMail;
     @FindBy(id = "message")
     WebElement emptyMail;
-
-    @FindBy(css = "div.ylogo a")
-    WebElement linka;
+    @FindBy(id = "ifmail")
+    WebElement mailFrame;
 
     public EmailGeneratorPage(WebDriver driver) {
         super(driver);
@@ -62,7 +61,7 @@ public class EmailGeneratorPage extends AbstractPage {
         return email.getText();
     }
 
-    public String checkEmail() throws InterruptedException {
+    public String checkEmail() {
         driver.switchTo().defaultContent();
         wait.until(ExpectedConditions.elementToBeClickable(checkEmailBtn));
         checkEmailBtn.click();
@@ -70,8 +69,8 @@ public class EmailGeneratorPage extends AbstractPage {
         while (emptyMail.isDisplayed()) {
             refreshBtn.click();
         }
-        driver.switchTo().frame("ifmail");
-        System.out.println(textHeaderMail.getText());
+        wait.until(ExpectedConditions.visibilityOf(mailFrame));
+        driver.switchTo().frame(mailFrame);
         return textHeaderMail.getText();
     }
 

@@ -77,7 +77,7 @@ public class CalculatorPage extends AbstractPage {
         return new CalculatorPage(driver);
     }
 
-    public CalculatorPage checkOut() {
+    public CalculatorPage checkOutFrame() {
         driver.switchTo().defaultContent();
         return new CalculatorPage(driver);
     }
@@ -87,8 +87,11 @@ public class CalculatorPage extends AbstractPage {
         addGpuCheckBox.click();
         wait.until(ExpectedConditions.elementToBeClickable(gpuTypeDropbox));
         jse.executeScript("arguments[0].click();", gpuTypeDropbox);
+        wait.until(ExpectedConditions.elementToBeClickable(nvidiaTeslaV100));
         nvidiaTeslaV100.click();
+        wait.until(ExpectedConditions.elementToBeClickable(numbOfGpuDropbox));
         numbOfGpuDropbox.click();
+        wait.until(ExpectedConditions.elementToBeClickable(numbOfGpu1));
         numbOfGpu1.click();
     }
 
@@ -96,15 +99,15 @@ public class CalculatorPage extends AbstractPage {
         jse.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
-    public CalculatorPage fillForm(String NumberInstance,
-                                   Engine engine,
-                                   OsType osType,
-                                   VmClass vmClass,
-                                   Series series,
-                                   MachineType machineType,
-                                   Ssd ssd,
-                                   DataCenter dataCenter,
-                                   CommittedUsage commUsage) {
+    public CalculatorPage fillCalculator(String NumberInstance,
+                                         Engine engine,
+                                         OsType osType,
+                                         VmClass vmClass,
+                                         Series series,
+                                         MachineType machineType,
+                                         Ssd ssd,
+                                         DataCenter dataCenter,
+                                         CommittedUsage commUsage) {
         engineComponent.selectEngine(engine);
         scrollToElement(numbInst);
         numbInst.sendKeys(NumberInstance);
@@ -137,9 +140,8 @@ public class CalculatorPage extends AbstractPage {
     public CalculatorPage fillEstimateForm(String email) {
         estimateFormEmailInput.sendKeys(email);
         wait.until(ExpectedConditions.elementToBeClickable(sendEmailBtn));
+        scrollToElement(estimateFormEmailInput);
         sendEmailBtn.click();
         return new CalculatorPage(driver);
     }
-
-
 }
