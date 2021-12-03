@@ -3,18 +3,20 @@ package page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import service.TestDataReader;
 
 import java.util.ArrayList;
 
 public class EmailGeneratorPage extends AbstractPage {
 
-    private final String TEMP_EMAIL_URL = "https://yopmail.com/ru/";
+    private final String TEMP_EMAIL_URL = TestDataReader.getTestData("email_url");
     JavascriptExecutor jse = (JavascriptExecutor) driver;
     WebDriverWait wait = new WebDriverWait(driver, 6);
     ArrayList listAllTabs = new ArrayList();
@@ -27,11 +29,11 @@ public class EmailGeneratorPage extends AbstractPage {
     WebElement checkEmailBtn;
     @FindBy(id = "refresh")
     WebElement refreshBtn;
-    @FindBy(xpath = "//div[contains(text(),'Google Cloud Price Estimate')]")
+    @FindBy(className = "lms")
     WebElement textHeaderMail;
     @FindBy(id = "message")
     WebElement emptyMail;
-    @FindBy(id = "ifmail")
+    @FindBy(id = "ifinbox")
     WebElement mailFrame;
 
     public EmailGeneratorPage(WebDriver driver) {
@@ -73,6 +75,4 @@ public class EmailGeneratorPage extends AbstractPage {
         driver.switchTo().frame(mailFrame);
         return textHeaderMail.getText();
     }
-
-
 }

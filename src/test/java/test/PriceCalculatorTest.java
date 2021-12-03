@@ -18,7 +18,7 @@ import page.calculator.component.instances.optionsEnam.VmClass;
 
 public class PriceCalculatorTest extends CommonCondition {
 
-    String search = getTestData("base_url");
+    String search = getTestData("search");
 
     @Test
     public void priceCalculatorTest() throws InterruptedException {
